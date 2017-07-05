@@ -15,4 +15,20 @@ public class GameUI : MonoBehaviour {
   [SerializeField] private Text m_WaveClearText;
   [SerializeField] private Text m_NewWaveText;
   [SerializeField] private Player player;
+
+  public void UpdateReticle() {
+    switch (GunEquipper.ActiveWeaponType) {
+      case Constants.Pistol:
+        m_Reticle.sprite = m_RedReticle;
+        break;
+      case Constants.AssaultRifle:
+        m_Reticle.sprite = m_BlueReticle;
+        break;
+      case Constants.Shotgun:
+        m_Reticle.sprite = m_YellowReticle;
+        break;
+      default:
+        return;
+    }
+  }
 }
