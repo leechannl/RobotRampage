@@ -48,5 +48,6 @@ public class Ammo : MonoBehaviour {
     }
 
     AmmoCountPerGunType[gunType]--;
+    m_GameUi.SetAmmoText(AmmoCountPerGunType[gunType]);
   }
 }

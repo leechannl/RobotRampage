@@ -65,5 +65,6 @@ public class Robot : MonoBehaviour {
   private IEnumerator DestroyRobot() {
     yield return new WaitForSeconds(1.5f);
     Destroy(gameObject);
+    Game.RemoveEnemy();
   }
 }

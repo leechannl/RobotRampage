@@ -7,6 +7,7 @@ public class GunEquipper : MonoBehaviour {
   public GameObject Shotgun;
 
   [SerializeField] private GameUI m_GameUi;
+  [SerializeField] private Ammo m_Ammo;
 
   private GameObject m_ActiveGun;
 
@@ -44,5 +45,6 @@ public class GunEquipper : MonoBehaviour {
 
     weapon.SetActive(true);
     m_ActiveGun = weapon;
+    m_GameUi.SetAmmoText(m_Ammo.GetAmmoCount(m_ActiveGun.tag));
   }
 }
