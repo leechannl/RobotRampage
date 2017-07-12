@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Game : MonoBehaviour {
   public GameUI GameUi;
@@ -10,6 +12,7 @@ public class Game : MonoBehaviour {
   public int WaveCountdown;
   public bool IsGameOver;
   public int EnemiesLeft;
+  public GameObject GameOverPanel;
 
   [SerializeField] private List<RobotSpawn> Spawns;
   private static Game _singleton;
@@ -23,6 +26,34 @@ public class Game : MonoBehaviour {
     EnemiesLeft = 0;
     StartCoroutine(UpdateWaveTimer());
     SpawnRobots();
+  }
+
+  private void OnGUI() {
+    if (IsGameOver && Cursor.visible == false) {
+      Cursor.visible = true;
+      Cursor.lockState = CursorLockMode.None;
+    }
+  }
+
+  public void GameOver() {
+    IsGameOver = true;
+    Time.timeScale = 0;
+    Player.GetComponent<FirstPersonController>().enabled = false;
+    Player.GetComponent<CharacterController>().enabled = false;
+    GameOverPanel.SetActive(true);
+  }
+
+  public void RestartGame() {
+    SceneManager.LoadScene(Constants.SceneBattle);
+    GameOverPanel.SetActive(true);
+  }
+
+  public void Exit() {
+    Application.Quit();
+  }
+
+  public void MainMenu() {
+    SceneManager.LoadScene(Constants.SceneMenu);
   }
 
   private void SpawnRobots() {

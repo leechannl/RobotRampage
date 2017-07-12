@@ -6,13 +6,15 @@ public class Player : MonoBehaviour {
   public int Health;
   public int Armor;
   public GameUI GameUi;
-  public GunEquipper GunEquipper;
+  public Game Game;
+  public AudioClip PlayerDeadAudioClip;
 
   private Ammo m_Ammo;
+  private GunEquipper m_GunEquipper;
 
   private void Start() {
     m_Ammo = GetComponent<Ammo>();
-    GunEquipper = GetComponent<GunEquipper>();
+    m_GunEquipper = GetComponent<GunEquipper>();
   }
 
   public void TakeDamage(int amount) {
@@ -25,7 +27,8 @@ public class Player : MonoBehaviour {
     GameUi.SetArmorText(Armor);
     GameUi.SetHealthText(Health);
     if (leftHealth <= 0) {
-      Debug.Log("GameOver");
+      GetComponent<AudioSource>().PlayOneShot(PlayerDeadAudioClip);
+      Game.GameOver();
     }
   }
 
@@ -70,7 +73,7 @@ public class Player : MonoBehaviour {
   private void PickupAssaultRifleAmmo() {
     m_Ammo.AddAmmo(Constants.AssaultRifle, 50);
     GameUi.SetPickupText("Assault rifle ammo picked up + 50 ammo");
-    if (GunEquipper.GetActiveWeapon().CompareTag(Constants.AssaultRifle)) {
+    if (m_GunEquipper.GetActiveWeapon().CompareTag(Constants.AssaultRifle)) {
       GameUi.SetAmmoText(m_Ammo.GetAmmoCount(Constants.AssaultRifle));
     }
   }
@@ -78,7 +81,7 @@ public class Player : MonoBehaviour {
   private void PickupPistolAmmo() {
     m_Ammo.AddAmmo(Constants.Pistol, 20);
     GameUi.SetPickupText("Pistol ammo picked up + 20 ammo");
-    if (GunEquipper.GetActiveWeapon().CompareTag(Constants.Pistol)) {
+    if (m_GunEquipper.GetActiveWeapon().CompareTag(Constants.Pistol)) {
       GameUi.SetAmmoText(m_Ammo.GetAmmoCount(Constants.Pistol));
     }
   }
@@ -86,7 +89,7 @@ public class Player : MonoBehaviour {
   private void PickupShotgunAmmo() {
     m_Ammo.AddAmmo(Constants.Shotgun, 10);
     GameUi.SetPickupText("Shotgun ammo picked up + 10 ammo");
-    if (GunEquipper.GetActiveWeapon().CompareTag(Constants.Shotgun)) {
+    if (m_GunEquipper.GetActiveWeapon().CompareTag(Constants.Shotgun)) {
       GameUi.SetAmmoText(m_Ammo.GetAmmoCount(Constants.Shotgun));
     }
   }
